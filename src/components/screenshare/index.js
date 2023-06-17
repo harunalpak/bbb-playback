@@ -23,10 +23,10 @@ const intlMessages = defineMessages({
 const buildSources = () => {
   return [
     {
-      src: buildFileURL('deskshare/deskshare.mp4'),
+      src: buildFileURL('deskshare/deskshare.mp4').replace('public-image','public-video'),
       type: 'video/mp4',
     }, {
-      src: buildFileURL('deskshare/deskshare.webm'),
+      src: buildFileURL('deskshare/deskshare.webm').replace('public-image','public-video'),
       type: 'video/webm',
     },
   ].filter(source => storage.media.find(m => source.type.includes(m)));

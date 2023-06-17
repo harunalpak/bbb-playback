@@ -31,7 +31,7 @@ const buildSources = () => {
   if (storage.fallback) {
     return [
       {
-        src: buildFileURL('audio/audio.webm'),
+        src: buildFileURL('audio/audio.webm').replace('public-image','public-video'),
         type: 'audio/webm',
       },
     ];
@@ -39,10 +39,10 @@ const buildSources = () => {
 
   return [
     {
-      src: buildFileURL('video/webcams.mp4'),
+      src: buildFileURL('video/webcams.mp4').replace('public-image','public-video'),
       type: 'video/mp4',
     }, {
-      src: buildFileURL('video/webcams.webm'),
+      src: buildFileURL('video/webcams.webm').replace('public-image','public-video'),
       type: 'video/webm',
     },
   ].filter(source => storage.media.find(m => source.type.includes(m)));

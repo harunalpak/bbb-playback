@@ -32,8 +32,7 @@ const files = {
 const locale = { default: 'en' };
 
 const medias = [
-  'mp4',
-  'webm',
+  'mp4'
 ]
 
 const player = {
