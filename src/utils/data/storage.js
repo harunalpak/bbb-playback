@@ -94,7 +94,7 @@ const fetchFile = (data, recordId, onUpdate, onLoaded, onError) => {
 const fetchMedia = (recordId, onUpdate, onLoaded, onError) => {
   const fetches = medias.map(type => {
     let url = buildFileURL(`video/webcams.${type}`, recordId);
-    url = url.replace('public-image', 'public-video');
+    url = url.replace('-image', '-video');
     return fetch(url, { method: 'HEAD' });
   });
 

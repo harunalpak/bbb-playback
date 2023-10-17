@@ -1,5 +1,5 @@
 const BUILD = process.env.REACT_APP_BBB_PLAYBACK_BUILD;
-const MEDIA_ROOT_URL = 'https://bbbrecords-public-image.mncdn.com/records'; // process.env.REACT_APP_MEDIA_ROOT_URL; 
+const MEDIA_ROOT_URL = 'https://bbbrecords-public-image.mncdn.com'; // process.env.REACT_APP_MEDIA_ROOT_URL; 
 const NO_ROUTER = process.env.REACT_APP_NO_ROUTER;
 
 const ERROR = {

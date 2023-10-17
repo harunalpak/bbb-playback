@@ -124,3 +124,6 @@ Reload nginx service
 ```
 sudo systemctl reload nginx
 ```
+
+
+pm2 start npm -- start

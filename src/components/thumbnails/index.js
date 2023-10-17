@@ -69,6 +69,19 @@ const Thumbnails = ({
     }
   }
 
+  const isIOS = () => {
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.platform)
+    // iPad on iOS 13 detection
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  }
+
   useEffect(() => {
     if (!interaction.current) {
       if (config.scroll) {
@@ -86,23 +99,6 @@ const Thumbnails = ({
       onMouseLeave={() => interaction.current = false}
       tabIndex="0"
     >
-      {storage.thumbnails.reduce((result, item, index) => {
-        if (!isFiltered(index)) {
-          const active = index === currentIndex;
-
-          result.push(
-            <Item
-              active={active}
-              index={index}
-              interactive={interactive}
-              item={item}
-              setRef={setRef}
-            />
-          );
-        }
-
-        return result;
-      }, [])}
       <ClearButton
         interactive={interactive}
         onClick={() => handleSearch([])}
