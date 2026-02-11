@@ -574,7 +574,7 @@ const addAlternatesToThumbnails = (thumbnails, alternates) => {
     const { src } = thumbnail;
     thumbnail.alt = '';
 
-    const found = alternates.find(alt => src.replace(prefix, url) === alt.src);
+    const found = alternates ? alternates.find(alt => src.replace(prefix, url) === alt.src) : false;
     if (found) thumbnail.alt = found.text;
 
     return thumbnail;
@@ -583,11 +583,13 @@ const addAlternatesToThumbnails = (thumbnails, alternates) => {
 
 const mergeMessages = (chat, polls, videos) => {
   return [
-    ...chat,
-    ...polls,
-    ...videos,
+    ...(Array.isArray(chat) ? chat : []),
+    ...(Array.isArray(polls) ? polls : []),
+    ...(Array.isArray(videos) ? videos : []),
   ].sort((a, b) => a.timestamp - b.timestamp);
 };
+
+
 
 export {
   addAlternatesToThumbnails,

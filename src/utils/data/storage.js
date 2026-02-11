@@ -88,7 +88,10 @@ const fetchFile = (data, recordId, onUpdate, onLoaded, onError) => {
       onUpdate(data);
       if (hasLoaded()) onLoaded();
     }).catch(error => onError(ERROR.BAD_REQUEST));
-  }).catch(error => onError(ERROR.NOT_FOUND));
+  }).catch(error => {
+    onLoaded();
+    return null;
+  });
 };
 
 const fetchMedia = (recordId, onUpdate, onLoaded, onError) => {
@@ -133,7 +136,12 @@ const tryMediaFallback = (recordId, onUpdate, onLoaded, onError) => {
       onUpdate(ID.MEDIA);
       if (hasLoaded()) onLoaded();
     } else {
-      onError(ERROR.NOT_FOUND);
+      // No video or audio found, but continue anyway
+      // The recording might have only presentation/chat content
+      logger.warn(ID.STORAGE, 'No video or audio media found, continuing without media');
+      DATA[ID.MEDIA] = [];
+      onUpdate(ID.MEDIA);
+      if (hasLoaded()) onLoaded();
     }
   });
 };
@@ -204,8 +212,8 @@ const storage = {
     if (!hasProperty(DATA, ID.MESSAGES)) {
       DATA[ID.MESSAGES] = mergeMessages(
         this.chat,
-        this.polls,
-        this.videos,
+        this.polls ? this.polls : [],
+        this.videos ? this.videos : [],
       );
     }
 
