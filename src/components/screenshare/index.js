@@ -71,10 +71,13 @@ const Screenshare = () => {
       aria-label={intl.formatMessage(intlMessages.aria)}
       className={cx('screenshare-wrapper', { inactive: currentContent !== ID.SCREENSHARE })}
       id={ID.SCREENSHARE}
+      onContextMenu={(event) => event.preventDefault()}
     >
       <div data-vjs-player>
         <video
           className="video-js"
+          controlsList="nodownload"
+          disablePictureInPicture
           playsInline
           preload="auto"
           ref={element}

@@ -175,10 +175,13 @@ const Webcams = () => {
       aria-label={intl.formatMessage(intlMessages.aria)}
       className="webcams-wrapper"
       id={ID.WEBCAMS}
+      onContextMenu={(event) => event.preventDefault()}
     >
       <div data-vjs-player>
         <video
           className="video-js"
+          controlsList="nodownload"
+          disablePictureInPicture
           playsInline
           preload="auto"
           ref={element}
