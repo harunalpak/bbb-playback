@@ -36,6 +36,8 @@ const Image = ({
     <img
       alt={alt}
       className={cx('thumbnail-image', { logo })}
+      decoding="async"
+      loading="lazy"
       src={buildFileURL(src)}
     />
   );
