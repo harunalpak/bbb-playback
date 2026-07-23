@@ -9,7 +9,12 @@ import {
   getCurrentDataInterval,
 } from 'utils/data';
 import storage from 'utils/data/storage';
-import { isEqual, getLayoutEvent } from 'utils/data/validators';
+import {
+  getLayoutEvent,
+  isEmpty,
+  isEnabled,
+  isEqual,
+} from 'utils/data/validators';
 
 const useCurrentContent = () => {
   const [currentContent, setCurrentContent] = useState(ID.PRESENTATION);
@@ -37,9 +42,17 @@ const useLayoutSwap = () => {
 
   useEffect(() => {
     const handleTimeUpdate = (event) => {
-      const layoutEvent = getLayoutEvent(storage.layoutSwap, event.detail.time);
-      const nextShowPresentation = layoutEvent ? layoutEvent.showPresentation : true;
-      const nextShowScreenshare = layoutEvent ? layoutEvent.showScreenshare : false;
+      let nextShowPresentation = true;
+      let nextShowScreenshare = false;
+
+      if (isEmpty(storage.layoutSwap)) {
+        // Old recordings have no layout.xml; fall back to deskshare events
+        nextShowScreenshare = isEnabled(storage.screenshare, event.detail.time);
+      } else {
+        const layoutEvent = getLayoutEvent(storage.layoutSwap, event.detail.time);
+        nextShowPresentation = layoutEvent ? layoutEvent.showPresentation : true;
+        nextShowScreenshare = layoutEvent ? layoutEvent.showScreenshare : false;
+      }
 
       if (layoutSwap.showPresentation !== nextShowPresentation || layoutSwap.showScreenshare !== nextShowScreenshare) {
         setLayoutSwap({
