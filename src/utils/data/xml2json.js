@@ -158,7 +158,18 @@ const xml2json = (xml, tab) => {
 
 const parseFromString = (str) => {
   const dom = (new DOMParser()).parseFromString(str, "text/xml");
-  return JSON.parse(xml2json(dom, ''));
+  const jsonStr = xml2json(dom, '');
+  if (!jsonStr || jsonStr === 'undefined') {
+    return {}; // veya return null;
+  }
+
+  try {
+    return JSON.parse(jsonStr);
+  } catch (e) {
+    console.error('Geçersiz JSON:', jsonStr);
+    return {};
+  }
+
 }
 
 export {
