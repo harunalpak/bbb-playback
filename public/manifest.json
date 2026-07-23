@@ -1,11 +1,11 @@
 {
   "short_name": "Playback",
-  "name": "BigBlueButton recording playback",
+  "name": "Ders Paneli - Ders İzleme",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "16x16",
-      "type": "image/x-icon"
+      "src": "derspanelifav.png",
+      "sizes": "26x25",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
