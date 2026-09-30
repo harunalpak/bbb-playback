@@ -12,6 +12,7 @@ import { LAYOUT } from 'utils/constants';
 import { isEqual } from 'utils/data/validators';
 import layout from 'utils/layout';
 import storage from 'utils/data/storage';
+import deviceInfo from 'utils/deviceInfo';
 import './index.scss';
 import { gte as semverGte } from 'semver';
 
@@ -73,13 +74,17 @@ const Content = ({
           </span>
         ) : null}
       </div>
-      <div className={cx('bottom-content', { 'inactive': fullscreen })}>
-        <Thumbnails
-          handleSearch={handleSearch}
-          interactive
-          search={search}
-        />
-      </div>
+      {/* Thumbnail strip is not rendered on mobile: iOS devices fail to load
+          the slide images and playback gets stuck. */}
+      {!deviceInfo.isMobile && (
+        <div className={cx('bottom-content', { 'inactive': fullscreen })}>
+          <Thumbnails
+            handleSearch={handleSearch}
+            interactive
+            search={search}
+          />
+        </div>
+      )}
     </div>
   );
 };
