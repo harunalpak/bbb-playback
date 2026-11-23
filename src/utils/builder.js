@@ -616,11 +616,11 @@ const addAlternatesToThumbnails = (thumbnails, alternates) => {
   });
 };
 
-const mergeMessages = (chat = [], polls = [], videos = []) => {
+const mergeMessages = (chat, polls, videos) => {
   return [
-    ...chat,
-    ...polls,
-    ...videos,
+    ...(chat || []),
+    ...(polls || []),
+    ...(videos || []),
   ].sort((a, b) => a.timestamp - b.timestamp);
 };
 

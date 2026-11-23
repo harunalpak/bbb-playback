@@ -34,6 +34,9 @@ const DATA = {};
 
 let FALLBACK = false;
 
+// Files the player cannot work without
+const REQUIRED = [ID.METADATA, ID.SHAPES];
+
 const hasFetched = () => {
   if (STATUS !== STATE.WAITING) return true;
 
@@ -81,6 +84,13 @@ const fetchFile = (data, recordId, onUpdate, onLoaded, onError) => {
       logger.warn(ID.STORAGE, file, response);
       return null;
     }
+  }).catch(error => {
+    // Network/CORS or parse failure (e.g. a CDN-cached response without CORS
+    // headers). Only the essential files are fatal; anything else is handled
+    // like a missing file so the recording still plays.
+    if (REQUIRED.includes(data)) throw error;
+    logger.warn(ID.STORAGE, 'unreachable', file, error);
+    return null;
   }).then(value => {
     build(file, value).then(content => {
       if (content) logger.debug(ID.STORAGE, 'built', file);
